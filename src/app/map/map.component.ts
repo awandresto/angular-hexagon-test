@@ -1,15 +1,27 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
+import { HexDataService } from '../shared/services/hex-data.service';
 
 @Component({
   selector: 'app-map',
+  standalone: true,
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit {
   @ViewChild('map', { static: true }) mapElement!: ElementRef<HTMLDivElement>;
 
   private map!: L.Map;
+
+  constructor(private hexagonService: HexDataService) {
+  }
+
+  public ngOnInit(): void {
+    this.hexagonService.getRawData().subscribe(data => {
+      // Process the hexagon data here
+    });
+  }
 
   public ngAfterViewInit(): void {
     this.map = L.map(this.mapElement.nativeElement, {
