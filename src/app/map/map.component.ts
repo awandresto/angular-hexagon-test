@@ -1,15 +1,31 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import * as L from 'leaflet';
 import { HexDataService } from '../shared/services/hex-data.service';
+import { SpinnerComponent } from '../shared/components/spinner/spinner.component';
+import { BehaviorSubject } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-map',
   standalone: true,
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
+  imports: [
+    SpinnerComponent,
+    AsyncPipe
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MapComponent implements OnInit, AfterViewInit {
+  public  isLoading$ = new BehaviorSubject(false);
+
   @ViewChild('map', { static: true }) mapElement!: ElementRef<HTMLDivElement>;
 
   private map!: L.Map;
@@ -18,8 +34,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   public ngOnInit(): void {
+    this.isLoading$.next(true);
     this.hexagonService.getRawData().subscribe(data => {
       // Process the hexagon data here
+      this.isLoading$.next(false);
     });
   }
 

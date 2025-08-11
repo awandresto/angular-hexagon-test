@@ -1,1 +1,5 @@
 <div #map class="map-container"></div>
+
+@if (isLoading$ | async) {
+  <app-spinner></app-spinner>
+}
