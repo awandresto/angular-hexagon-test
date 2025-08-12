@@ -35,7 +35,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   public ngOnInit(): void {
     this.isLoading$.next(true);
-    this.hexagonService.getRawData().subscribe(data => {
+    this.hexagonService.getTransformedData().subscribe(data => {
       // Process the hexagon data here
       this.isLoading$.next(false);
     });
