@@ -4,7 +4,6 @@ export type GeometryType = 'Polygon' | 'MultiPolygon' | 'Point';
 export interface RawHexagonFeatureCollection {
   type: string;
   features: RawHexagonFeature[];
-  crs?: Crs;
 }
 
 export interface RawHexagonFeature {
@@ -21,13 +20,11 @@ export interface RawHexagonProperties {
 export interface RawPolygon {
   type: GeometryType;
   coordinates: Position3857[][];
-  crs?: Crs;
 }
 
 export interface RawMultiPolygon {
   type: GeometryType;
   coordinates: Position3857[][][];
-  crs?: Crs;
 }
 
 export type Position3857 = [number, number];
@@ -48,7 +45,6 @@ export interface HexagonFeature {
 
 export interface HexagonProperties {
   id: string | number;
-  colorHex: string;
   color: string;
 }
 
@@ -68,17 +64,3 @@ export interface Point {
 }
 
 export type Position4326 = [number, number];
-
-export interface HexagonPointFeature_4326 {
-  type: string;
-  properties: HexagonProperties;
-  geometry: Point;
-}
-
-// --CRS--
-export interface Crs {
-  type: string;
-  properties: { name: string };
-}
-
-

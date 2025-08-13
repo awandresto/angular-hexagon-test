@@ -28,7 +28,6 @@ export function transformFC3857to4326(
 function transformFeature(f: RawHexagonFeature): HexagonFeature {
   const props: HexagonProperties = {
     id: f.properties.ID,
-    colorHex: f.properties.COLOR_HEX,
     color: convertColorHex(f.properties.COLOR_HEX),
   };
 
