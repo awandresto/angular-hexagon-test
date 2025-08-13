@@ -1,59 +1,66 @@
-# AngularHexagonTest
+# Hexagons Map (Angular + Leaflet + H3)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+Visualize hexagons over a basemap (OSM) using **H3**. Source data comes from `src/assets/data.json`:
+- The input coordinates are provided in **EPSG:3857** and are converted to **EPSG:4326 (WGS84)**.
+- Hexagons are generated from the polygons using **h3-js** and their size adapts to the zoom level.
+- Rendering uses a transparent **Canvas** layer above the tiles.
+
+---
+
+## Tech stack
+
+- Angular 19
+- Leaflet
+- proj4
+- h3-js
+- Turf.js
+
+---
+
+## Clone & install
+
+```bash
+# 1) Clone the repository (replace with your repo URL)
+git clone https://github.com/awandresto/angular-hexagon-test.git
+cd angular-hexagon-test
+
+# 2) Install dependencies
+npm install
+```
+
+---
+
+## Data
+
+Input data file is here:
+```
+src/assets/data.json
+```
+
+---
 
 ## Development server
 
-To start a local development server, run:
-
 ```bash
+npm start
+# or
 ng serve
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+Then open it at:
+```
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
+
+## Production build
 
 ```bash
-ng generate --help
+npm run build
+# output in dist/<project-name>
 ```
 
-## Building
+---
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Deployed version
+[Live demo](https://angular-hexagon-test.onrender.com/)
