@@ -70,18 +70,18 @@ function estimateCellsForRes(res: number, map: L.Map): number {
   return viewportArea / cellArea;
 }
 
-export function pickResForViewport(map: L.Map, zoom: number, maxCells = 1500): number {
-  let res = zoomToH3Res(zoom);
-
-  while (res > 0 && estimateCellsForRes(res, map) > maxCells) res--;
-  return res;
-}
-
 function featureToCells(f: HexagonFeature, res: number): string[] {
   return featureToH3Set(
     f as unknown as Feature<Polygon | MultiPolygon, any>,
     res
   );
+}
+
+export function pickResForViewport(map: L.Map, zoom: number, maxCells = 1500): number {
+  let res = zoomToH3Res(zoom);
+
+  while (res > 0 && estimateCellsForRes(res, map) > maxCells) res--;
+  return res;
 }
 
 function zoomToH3Res(zoom: number): number {

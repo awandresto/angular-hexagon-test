@@ -44,6 +44,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
   private cellMaps = new Map<number, Map<string, string>>();
   private rendered = new Map<string | number, L.Polygon>();
+  private canvasRenderer!: L.Canvas;
 
   constructor(private hexagonService: HexDataService) {
   }
@@ -56,6 +57,12 @@ export class MapComponent implements AfterViewInit, OnDestroy {
       maxZoom: 19,
       preferCanvas: true,
     });
+
+    const pane = this.map.createPane('hexPane');
+    pane.style.zIndex = '999';
+    pane.style.pointerEvents = 'none';
+
+    this.canvasRenderer = L.canvas({ pane: 'hexPane', padding: 0.3 });
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -90,7 +97,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     if (!this.data) return;
 
     const zoom = this.map.getZoom();
-    const res = pickResForViewport(this.map, zoom, 1500);
+    const res = pickResForViewport(this.map, zoom);
 
     const bounds = this.map.getBounds();
     const viewportBboxPoly = turf
@@ -124,10 +131,9 @@ export class MapComponent implements AfterViewInit, OnDestroy {
         color: '#000',
         weight: 2,
         interactive: false,
-        renderer: L.canvas()
-      });
+        renderer: this.canvasRenderer
+      }).addTo(this.hexLayer);
 
-      poly.addTo(this.hexLayer);
       this.rendered.set(id, poly);
     }
   }
